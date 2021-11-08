@@ -125,33 +125,17 @@ const core = __webpack_require__(470);
 const cp = __webpack_require__(129);
 const fs = __webpack_require__(747);
 
-async function install() {
-  try {
-    cp.execSync(`command -v direnv`, { encoding: "utf-8"} )
-  }
-  catch (error) {
-    core.info(`Download direnv via apt-get...`);
-    try {
-      cp.execSync('sudo apt-get install -y direnv', { encoding: "utf-8" });
-      core.info(`  Success!`);
-    }
-    catch (error2) {
-      core.info(`  Failure... `)
-      core.info(`Download direnv via curl...`)
-      cp.execSync('curl -sfL https://direnv.net/install.sh | bash > /dev/null 2>&1', { encoding: "utf-8" });
-      core.info(`  Success!`);
-    }
-  }
-}
-
 // most @actions toolkit packages have async methods
 async function run() {
   try {
     // If there's no .envrc, skip all this
     if(fs.existsSync(".envrc")) {
-      install();
-      cp.execSync('direnv allow', { encoding: "utf-8" });
-      const envs = JSON.parse(cp.execSync('direnv export json', { encoding: "utf-8" }));
+      const binary = './dist/direnv-2.28/direnv';
+      const os = cp.execSync('uname', { encoding: "utf-8" }).toLowerCase();
+      const direnv = `${binary}.${os}-amd64`; // Some kind soul could eventually bring arm64 into the fold
+
+      cp.execSync(`${direnv} allow`, { encoding: "utf-8" });
+      const envs = JSON.parse(cp.execSync(`${direnv} export json`, { encoding: "utf-8" }));
 
       Object.keys(envs).forEach(function (name) {
         const value = envs[name];
