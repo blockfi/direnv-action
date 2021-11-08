@@ -131,7 +131,7 @@ async function run() {
     // If there's no .envrc, skip all this
     if(fs.existsSync(".envrc")) {
       const binary = './dist/direnv-2.28/direnv';
-      const os = cp.execSync('uname', { encoding: "utf-8" }).toLowerCase();
+      const os = cp.execSync('uname', { encoding: "utf-8" }).toLowerCase().trim();
       const direnv = `${binary}.${os}-amd64`; // Some kind soul could eventually bring arm64 into the fold
 
       cp.execSync(`${direnv} allow`, { encoding: "utf-8" });
