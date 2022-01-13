@@ -1,5 +1,5 @@
 
-THIS REPOSITORY IS DEPRECATED, PLEASE SEE: https://github.com/blockfi/direnv-allow-action
+THIS REPOSITORY IS DEPRECATED.
 
 <p align="center">
   <a href="https://github.com/HatsuneMiku3939/direnv-action/actions"><img alt="direnv-action status" src="https://github.com/HatsuneMiku3939/direnv-action/workflows/units-test/badge.svg"></a>
